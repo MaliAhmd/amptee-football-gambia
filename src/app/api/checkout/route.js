@@ -3,10 +3,13 @@ import Stripe from "stripe";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-
 export async function POST(req) {
   try {
+    if (!process.env.STRIPE_SECRET_KEY) {
+      throw new Error("Stripe Secret Key is not configured");
+    }
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
     const body = await req.json();
     const { checkoutData, cartItems, cartTotal } = body;
 
