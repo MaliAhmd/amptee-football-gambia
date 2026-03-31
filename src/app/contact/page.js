@@ -53,7 +53,7 @@ export default function Contact() {
                 </div>
                 <div className="min-w-0">
                   <p className="text-sm font-semibold leading-6 text-gray-300">Email Us</p>
-                  <p className="text-base sm:text-lg font-bold text-white break-all sm:break-normal">info@ampteefootball.gm</p>
+                  <p className="text-base sm:text-lg font-bold text-white break-all sm:break-normal">info@amputeefootball.gm</p>
                 </div>
               </div>
 

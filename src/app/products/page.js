@@ -12,6 +12,7 @@ export default function ProductsPage() {
   const [cart, setCart] = useState({}); // Map of productId -> cartItem
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [checkoutData, setCheckoutData] = useState({
     name: "",
     email: "",
@@ -95,12 +96,34 @@ export default function ProductsPage() {
     setCheckoutData(prev => ({ ...prev, [name]: value }));
   };
 
-  const processPayment = (e) => {
+  const processPayment = async (e) => {
     e.preventDefault();
-    alert("Payment submitted successfully! (This is a mockup. You will connect a payment processor here later.)");
-    // Optionally: clear cart and close modal
-    // setCart({});
-    // setIsCheckoutOpen(false);
+    setCheckoutLoading(true);
+
+    try {
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          checkoutData,
+          cartItems: Object.values(cart),
+          cartTotal: Object.values(cart).reduce((sum, item) => sum + item.updated_price, 0)
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert("Failed to create checkout session. " + (data.error || ""));
+      }
+    } catch (error) {
+      console.error("Payment Error:", error);
+      alert("An error occurred during checkout.");
+    } finally {
+      setCheckoutLoading(false);
+    }
   };
 
   const updateQuantity = (productId, delta) => {
@@ -370,9 +393,15 @@ export default function ProductsPage() {
                 <button 
                   type="submit" 
                   form="checkout-form"
-                  className="w-full inline-flex justify-center rounded-xl bg-primary px-6 py-3.5 text-sm font-bold uppercase tracking-wide text-white shadow-lg shadow-primary/20 hover:bg-primary/90 sm:w-auto transition-all items-center gap-2"
+                  disabled={checkoutLoading}
+                  className="w-full inline-flex justify-center rounded-xl bg-primary px-6 py-3.5 text-sm font-bold uppercase tracking-wide text-white shadow-lg shadow-primary/20 hover:bg-primary/90 sm:w-auto transition-all items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <Zap className="w-4 h-4 fill-current" /> Pay Now
+                  {checkoutLoading ? (
+                    <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-white"></div>
+                  ) : (
+                    <Zap className="w-4 h-4 fill-current" />
+                  )}
+                  {checkoutLoading ? "Processing..." : "Pay Now"}
                 </button>
                 <button 
                   type="button" 
@@ -394,10 +423,10 @@ export default function ProductsPage() {
              <span className="text-xs font-bold uppercase tracking-wider text-gray-300">Official Gear</span>
           </div>
           <h1 className="text-5xl md:text-6xl font-extrabold uppercase tracking-tight text-white mb-6 leading-tight">
-            Amptee <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent-blue">Products</span>
+            Amputee <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent-blue">Products</span>
           </h1>
           <p className="text-lg text-gray-400 font-medium leading-relaxed">
-            Support your local team with the official Amptee Football Gambia gear. Premium quality, built for the passionate fan.
+            Support your local team with the official Amputee Football Gambia gear. Premium quality, built for the passionate fan.
           </p>
         </div>
 

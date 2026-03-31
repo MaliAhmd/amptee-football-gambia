@@ -49,7 +49,7 @@ export default function AdminLayout({ children }) {
         <div className="p-6">
           <Link href="/" className="flex items-center gap-2 mb-10">
             <Trophy className="h-6 w-6 text-accent-gold" />
-            <span className="text-xl font-bold uppercase tracking-wide">Amptee Admin</span>
+            <span className="text-xl font-bold uppercase tracking-wide">Amputee Admin</span>
           </Link>
           <nav className="space-y-2">
              <Link href="/admin/dashboard" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
@@ -66,6 +66,11 @@ export default function AdminLayout({ children }) {
                pathname === "/admin/products" ? "bg-primary/20 text-primary border border-primary/30" : "text-gray-400 hover:text-white hover:bg-white/5"
              }`}>
                <ShoppingBag className="h-5 w-5" /> Products
+             </Link>
+             <Link href="/admin/orders" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+               pathname === "/admin/orders" ? "bg-primary/20 text-primary border border-primary/30" : "text-gray-400 hover:text-white hover:bg-white/5"
+             }`}>
+               <FileText className="h-5 w-5" /> Orders
              </Link>
           </nav>
         </div>

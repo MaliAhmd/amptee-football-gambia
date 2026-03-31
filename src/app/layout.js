@@ -14,8 +14,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Amptee Football Gambia",
-  description: "Modern sports media website for Amptee Football Gambia",
+  title: "Amputee Football Gambia",
+  description: "Modern sports media website for Amputee Football Gambia",
+  icons: {
+    icon: '/icon.svg',
+  },
 };
 
 export default function RootLayout({ children }) {

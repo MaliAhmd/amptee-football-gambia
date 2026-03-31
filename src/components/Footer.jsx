@@ -13,7 +13,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="text-center md:text-left">
             <h3 className="text-2xl font-bold uppercase tracking-wider text-white">
-              Amptee <span className="text-accent-gold">Football</span>
+              Amputee <span className="text-accent-gold">Football</span>
             </h3>
             <p className="mt-2 text-sm text-gray-400">
               The premier destination for football news and features in Gambia.
@@ -43,7 +43,7 @@ export default function Footer() {
         </div>
         <div className="mt-10 border-t border-white/10 pt-6 text-center text-sm text-gray-500">
           <p className="flex items-center justify-center gap-1">
-            &copy; {new Date().getFullYear()} Amptee Football Gambia. All rights reserved.
+            &copy; {new Date().getFullYear()} Amputee Football Gambia. All rights reserved.
           </p>
         </div>
       </div>

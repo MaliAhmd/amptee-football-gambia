@@ -34,7 +34,7 @@ export default function Blog() {
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-white sm:text-5xl uppercase font-extrabold mb-4">The Dugout <span className="text-accent-gold">Blog</span></h2>
           <p className="mt-2 text-lg leading-8 text-gray-400">
-            Insights, match analysis, and exclusive stories from Amptee Football Gambia.
+            Insights, match analysis, and exclusive stories from Amputee Football Gambia.
           </p>
         </div>
         
@@ -92,7 +92,7 @@ export default function Blog() {
                     <div className="text-sm leading-6">
                       <p className="font-semibold text-white">
                         <span className="absolute inset-0" />
-                        Amptee Editorial
+                        Amputee Editorial
                       </p>
                       <p className="text-gray-400">Staff Writer</p>
                     </div>

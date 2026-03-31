@@ -37,7 +37,7 @@ export default function Home() {
         </div>
         <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-white mb-6 uppercase">
           Empowering <br className="hidden md:block"/>
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent-gold">Amptee Football</span>
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent-gold">Amputee Football</span>
         </h1>
         <p className="mt-4 text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed">
           The central hub for all updates, fixtures, match analysis, and inside stories 

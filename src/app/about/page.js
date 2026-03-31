@@ -50,7 +50,7 @@ export default function About() {
         <div className="bg-white/5 border border-white/10 rounded-3xl p-8 md:p-14 backdrop-blur-md shadow-2xl relative overflow-hidden">
           {imageUrl && (
             <div className="mb-12 relative h-64 sm:h-80 md:h-[400px] w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 group">
-               <img src={imageUrl} alt="Amptee Football Cover" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+               <img src={imageUrl} alt="Amputee Football Cover" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-8">
                  <div className="flex items-center gap-3">
                    <Trophy className="h-8 w-8 text-accent-gold" />

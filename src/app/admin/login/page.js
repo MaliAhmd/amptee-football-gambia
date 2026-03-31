@@ -41,7 +41,7 @@ export default function AdminLogin() {
             <Lock className="h-8 w-8 text-primary" />
           </div>
           <h2 className="text-3xl font-extrabold text-white uppercase tracking-tight">Admin Portal</h2>
-          <p className="mt-2 text-sm text-gray-400">Sign in to manage Amptee Football</p>
+          <p className="mt-2 text-sm text-gray-400">Sign in to manage Amputee Football</p>
         </div>
         
         <form className="mt-8 space-y-6 relative" onSubmit={handleLogin}>

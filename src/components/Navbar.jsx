@@ -27,7 +27,7 @@ export default function Navbar() {
           <div className="flex items-center gap-2">
             <Trophy className="h-6 w-6 text-accent-gold" />
             <Link href="/" className="text-xl font-bold uppercase tracking-wide text-white hover:text-accent-gold transition-colors duration-300">
-              Amptee Football
+              Amputee Football
             </Link>
           </div>
           <div className="hidden md:block">
