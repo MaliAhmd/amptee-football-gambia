@@ -5,9 +5,9 @@ import { v2 as cloudinary } from "cloudinary";
 // Initialize Cloudinary
 // Note: If you have a different "Cloud Name" than "amptee-football-gambia", please update it here!
 cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
+  cloud_name: "dqlbidkyx",
+  api_key: "418619641989253",
+  api_secret: "cS-YcvgiKh29zzabLRTVtAHeOHg",
   secure: true,
 });
 
