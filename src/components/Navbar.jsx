@@ -15,11 +15,11 @@ export default function Navbar() {
   const links = [
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },
-    { name: "Blog", path: "/blog" },
-    { name: "Contact us", path: "/contact" },
-    { name: "Products", path: "/products" },
     { name: "Grassroots", path: "/grassroots" },
     { name: "Community", path: "/community" },
+    { name: "Shop", path: "/products" },
+    { name: "Blog", path: "/blog" },
+    { name: "Contact", path: "/contact" },
   ];
 
   return (
