@@ -5,7 +5,7 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
-import { LogOut, LayoutDashboard, FileText, Settings, Trophy, ShoppingBag } from "lucide-react";
+import { LogOut, LayoutDashboard, FileText, Settings, Trophy, ShoppingBag, Globe, Users } from "lucide-react";
 
 export default function AdminLayout({ children }) {
   const [user, setUser] = useState(null);
@@ -71,6 +71,16 @@ export default function AdminLayout({ children }) {
                pathname === "/admin/orders" ? "bg-primary/20 text-primary border border-primary/30" : "text-gray-400 hover:text-white hover:bg-white/5"
              }`}>
                <FileText className="h-5 w-5" /> Orders
+             </Link>
+             <Link href="/admin/grassroots" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+               pathname === "/admin/grassroots" ? "bg-primary/20 text-primary border border-primary/30" : "text-gray-400 hover:text-white hover:bg-white/5"
+             }`}>
+               <Globe className="h-5 w-5" /> Grassroots
+             </Link>
+             <Link href="/admin/community" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+               pathname === "/admin/community" ? "bg-primary/20 text-primary border border-primary/30" : "text-gray-400 hover:text-white hover:bg-white/5"
+             }`}>
+               <Users className="h-5 w-5" /> Community
              </Link>
           </nav>
         </div>
