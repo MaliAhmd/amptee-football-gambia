@@ -26,11 +26,14 @@ export default function Navbar() {
     <nav className="sticky top-0 z-50 w-full border-b border-white/10 bg-background/80 backdrop-blur-md">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Trophy className="h-6 w-6 text-accent-gold" />
-            <Link href="/" className="text-xl font-bold uppercase tracking-wide text-white hover:text-accent-gold transition-colors duration-300">
-              Amputee Football
-            </Link>
+          <div className="flex items-center gap-3">
+            <div className="relative h-14 w-14 overflow-hidden">
+            <img src="/logo1.png" alt="Amputee Football Gambia" className="h-full w-full object-contain" />
+            </div>
+            <Link href="/" className="flex flex-col leading-tight hover:text-accent-gold transition-colors duration-300">
+    <span className="text-sm font-bold uppercase tracking-wide text-white">Gambia Amputee</span>
+    <span className="text-sm font-bold uppercase tracking-wide text-accent-gold">Football Association</span>
+  </Link>
           </div>
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-8">

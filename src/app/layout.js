@@ -17,7 +17,7 @@ export const metadata = {
   title: "Amputee Football Gambia",
   description: "Modern sports media website for Amputee Football Gambia",
   icons: {
-    icon: '/icon.svg',
+    icon: '/logo.png',
   },
 };
 
