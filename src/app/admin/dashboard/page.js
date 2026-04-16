@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { collection, query, orderBy, getDocs, addDoc, updateDoc, deleteDoc, doc, serverTimestamp } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { auth, db } from "@/lib/firebase";
 import { uploadImage } from "@/app/actions/uploadImage";
 import { Plus, Edit2, Trash2, X, Check, FileText } from "lucide-react";
 
@@ -82,17 +82,21 @@ export default function AdminDashboard() {
         finalImageUrl = await uploadImage(formData);
       }
 
+      const currentUserEmail = auth.currentUser?.email || "Unknown Editor";
+
       if (editingArticle) {
         const articleRef = doc(db, "articles", editingArticle.id);
         await updateDoc(articleRef, {
           ...formData,
           imageUrl: finalImageUrl,
+          lastEditedBy: currentUserEmail,
           updatedAt: serverTimestamp()
         });
       } else {
         await addDoc(collection(db, "articles"), {
           ...formData,
           imageUrl: finalImageUrl,
+          lastEditedBy: currentUserEmail,
           createdAt: serverTimestamp()
         });
       }
@@ -150,6 +154,7 @@ export default function AdminDashboard() {
                 <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-gray-300 uppercase tracking-wider">Title</th>
                 <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-gray-300 uppercase tracking-wider">Category</th>
                 <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-gray-300 uppercase tracking-wider">Date</th>
+                <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-gray-300 uppercase tracking-wider">Last Edited By</th>
                 <th scope="col" className="px-6 py-4 text-right text-xs font-bold text-gray-300 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
@@ -166,6 +171,12 @@ export default function AdminDashboard() {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
                     {article.createdAt ? new Date(article.createdAt.seconds * 1000).toLocaleDateString() : "N/A"}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-xs text-gray-400 flex items-center gap-2">
+                       <span className="w-2 h-2 rounded-full bg-blue-500/50"></span>
+                       {article.lastEditedBy || "System Auto"}
+                    </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <button onClick={() => openEditModal(article)} className="text-accent-gold hover:text-white mr-4 transition-colors">

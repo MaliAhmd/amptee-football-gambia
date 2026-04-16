@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { collection, query, orderBy, getDocs, addDoc, updateDoc, deleteDoc, doc, serverTimestamp } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { auth, db } from "@/lib/firebase";
 import { uploadImage } from "@/app/actions/uploadImage";
 import { Plus, Edit2, Trash2, X, Check, Globe } from "lucide-react";
 
@@ -89,17 +89,21 @@ export default function AdminGrassroots() {
         finalImageUrl = await uploadImage(formDataUpload);
       }
 
+      const currentUserEmail = auth.currentUser?.email || "Unknown Editor";
+
       if (editingItem) {
         const itemRef = doc(db, "grassroots", editingItem.id);
         await updateDoc(itemRef, {
           ...formData,
           image: finalImageUrl,
+          lastEditedBy: currentUserEmail,
           updatedAt: serverTimestamp()
         });
       } else {
         await addDoc(collection(db, "grassroots"), {
           ...formData,
           image: finalImageUrl,
+          lastEditedBy: currentUserEmail,
           createdAt: serverTimestamp()
         });
       }
@@ -157,6 +161,7 @@ export default function AdminGrassroots() {
                 <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-gray-300 uppercase tracking-wider">Initiative Info</th>
                 <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-gray-300 uppercase tracking-wider">Category</th>
                 <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-gray-300 uppercase tracking-wider">Date</th>
+                <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-gray-300 uppercase tracking-wider">Last Edited By</th>
                 <th scope="col" className="px-6 py-4 text-right text-xs font-bold text-gray-300 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
@@ -185,6 +190,12 @@ export default function AdminGrassroots() {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
                     {item.createdAt ? new Date(item.createdAt.seconds * 1000).toLocaleDateString() : "N/A"}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-xs text-gray-400 flex items-center gap-2">
+                       <span className="w-2 h-2 rounded-full bg-blue-500/50"></span>
+                       {item.lastEditedBy || "System Auto"}
+                    </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <button onClick={() => openEditModal(item)} className="text-accent-blue hover:text-white mr-4 transition-colors">

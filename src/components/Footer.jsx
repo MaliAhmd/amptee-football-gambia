@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 export default function Footer() {
   const pathname = usePathname();
 
-  if (pathname.startsWith("/admin")) return null;
+  if (pathname.startsWith("/admin") || pathname.startsWith("/editor") || pathname.startsWith("/coach") || pathname.startsWith("/change-password")) return null;
 
   return (
     <footer className="mt-auto border-t border-white/10 bg-black/50 py-10">

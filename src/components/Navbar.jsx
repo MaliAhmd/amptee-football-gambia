@@ -9,13 +9,14 @@ export default function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
-  // Do not show the navigation bar on the admin panel pages
-  if (pathname.startsWith("/admin")) return null;
+  // Do not show the navigation bar on the dashboard pages
+  if (pathname.startsWith("/admin") || pathname.startsWith("/editor") || pathname.startsWith("/coach") || pathname.startsWith("/change-password")) return null;
 
   const links = [
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },
     { name: "Grassroots", path: "/grassroots" },
+    { name: "Team", path: "/players" },
     { name: "Community", path: "/community" },
     { name: "Shop", path: "/products" },
     { name: "Blog", path: "/blog" },

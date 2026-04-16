@@ -5,13 +5,22 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
-import { LogOut, LayoutDashboard, FileText, Settings, Trophy, ShoppingBag, Globe, Users } from "lucide-react";
+import { LogOut, LayoutDashboard, FileText, Settings, Trophy, ShoppingBag, Globe, Users, Shield } from "lucide-react";
 
 export default function AdminLayout({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const pathname = usePathname();
+  const Cookies = require('js-cookie');
+
+  const handleLogout = async () => {
+    await signOut(auth);
+    Cookies.remove('firebaseToken');
+    Cookies.remove('userRole');
+    Cookies.remove('userFirstLogin');
+    router.push('/admin/login');
+  };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -82,10 +91,20 @@ export default function AdminLayout({ children }) {
              }`}>
                <Users className="h-5 w-5" /> Community
              </Link>
+             <Link href="/admin/players" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+               pathname === "/admin/players" ? "bg-primary/20 text-primary border border-primary/30" : "text-gray-400 hover:text-white hover:bg-white/5"
+             }`}>
+               <Globe className="h-5 w-5" /> Team Players
+             </Link>
+             <Link href="/admin/users" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+               pathname === "/admin/users" ? "bg-primary/20 text-primary border border-primary/30" : "text-gray-400 hover:text-white hover:bg-white/5"
+             }`}>
+               <Shield className="h-5 w-5" /> Staff Access
+             </Link>
           </nav>
         </div>
         <div className="absolute bottom-0 w-full p-6 border-t border-white/10">
-          <button onClick={() => signOut(auth)} className="flex items-center gap-3 text-gray-400 hover:text-accent-red transition-all w-full px-4 py-3 rounded-xl hover:bg-white/5">
+          <button onClick={handleLogout} className="flex items-center gap-3 text-gray-400 hover:text-accent-red transition-all w-full px-4 py-3 rounded-xl hover:bg-white/5">
             <LogOut className="h-5 w-5" /> Logout
           </button>
         </div>

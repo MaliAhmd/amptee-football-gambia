@@ -2,15 +2,18 @@
 
 import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/lib/firebase";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { auth, db } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
-import { Trophy, Lock } from "lucide-react";
+import Cookies from "js-cookie";
+import { Trophy, Lock, Eye, EyeOff } from "lucide-react";
 
 export default function AdminLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
   const handleLogin = async (e) => {
@@ -19,10 +22,45 @@ export default function AdminLogin() {
     setError("");
     
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      router.push("/admin/dashboard");
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      let userData = { role: 'Admin', firstLogin: false }; // Fallback
+
+      try {
+        const userRef = doc(db, "users", userCredential.user.uid);
+        const userSnap = await getDoc(userRef);
+        
+        if (userSnap.exists()) {
+          userData = userSnap.data();
+          
+          if (userData.isBlocked) {
+            await auth.signOut();
+            setError("Your account has been blocked. Contact Admin for details.");
+            setLoading(false);
+            return;
+          }
+        } else {
+          userData = {
+            uid: userCredential.user.uid,
+            email: userCredential.user.email,
+            role: 'Admin',
+            firstLogin: false
+          };
+          await setDoc(userRef, userData);
+        }
+      } catch (fsError) {
+        console.warn("Firestore read/write failed, using fallback:", fsError);
+      }
+
+      const token = await userCredential.user.getIdToken();
+      Cookies.set('firebaseToken', token, { expires: 7 }); // 7 days
+      Cookies.set('userRole', userData.role || 'Admin', { expires: 7 });
+      Cookies.set('userFirstLogin', userData.firstLogin ? 'true' : 'false', { expires: 7 });
+
+      // Let middleware handle the redirect based on role
+      window.location.href = "/admin/dashboard"; // this will trigger middleware check
     } catch (err) {
-      setError("Invalid credentials. Please try again.");
+      console.error(err);
+      setError("Invalid credentials or server error. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -63,16 +101,23 @@ export default function AdminLogin() {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            <div>
+            <div className="relative">
               <label className="sr-only">Password</label>
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 required
-                className="appearance-none rounded-xl relative block w-full px-4 py-4 border border-white/10 bg-white/5 placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all sm:text-sm"
+                className="appearance-none rounded-xl relative block w-full px-4 py-4 border border-white/10 bg-white/5 placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all sm:text-sm pr-12"
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-white"
+              >
+                {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+              </button>
             </div>
           </div>
 
