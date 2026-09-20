@@ -13,16 +13,27 @@ export default function AdminOrders() {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const q = query(collection(db, "orders"), orderBy("createdAt", "desc"));
-        const snapshot = await getDocs(q);
-        const ordersData = snapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }));
+        let ordersData = [];
+        try {
+          // 1. Try fetching with server-side ordering
+          const q = query(collection(db, "orders"), orderBy("createdAt", "desc"));
+          const snapshot = await getDocs(q);
+          ordersData = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+          }));
+        } catch (orderErr) {
+          console.warn("Ordered query failed, falling back to client-side sort:", orderErr);
+          // 2. Fallback: Fetch collection without orderBy and sort in memory
+          const fallbackSnapshot = await getDocs(collection(db, "orders"));
+          ordersData = fallbackSnapshot.docs
+            .map(doc => ({ id: doc.id, ...doc.data() }))
+            .sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+        }
         setOrders(ordersData);
       } catch (err) {
         console.error("Error fetching orders:", err);
-        setError("Failed to fetch orders. You may need to create an index in Firestore.");
+        setError(err.message || "Failed to fetch orders.");
       } finally {
         setLoading(false);
       }
