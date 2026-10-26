@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-let rawBaseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://amputee-football-gambia.vercel.app";
+let rawBaseUrl = (process.env.NEXT_PUBLIC_BASE_URL || "https://amputee-football-gambia.vercel.app").replace(/amptee-football-gambia/gi, "amputee-football-gambia");
 let siteUrl = rawBaseUrl.replace(/\/+$/, "");
 if (!siteUrl.startsWith("http://localhost") && !siteUrl.startsWith("http://127.0.0.1")) {
   siteUrl = siteUrl.replace(/^http:\/\//i, "https://");

@@ -1,5 +1,5 @@
 export default function robots() {
-  let rawBaseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://amputee-football-gambia.vercel.app";
+  let rawBaseUrl = (process.env.NEXT_PUBLIC_BASE_URL || "https://amputee-football-gambia.vercel.app").replace(/amptee-football-gambia/gi, "amputee-football-gambia");
   let baseUrl = rawBaseUrl.replace(/\/+$/, "");
   if (!baseUrl.startsWith("http://localhost") && !baseUrl.startsWith("http://127.0.0.1")) {
     baseUrl = baseUrl.replace(/^http:\/\//i, "https://");
