@@ -19,7 +19,7 @@ export default function About() {
           setContent(docSnap.data().content || "");
           setImageUrl(docSnap.data().imageUrl || "");
         } else {
-          setContent("Amptee Football Gambia is your premier destination for football news, updates, and analyses. Our platform is dedicated to bringing the passion of Gambian and international football straight to your screens.");
+          setContent("Amputee Football Gambia is your premier destination for football news, updates, and analyses. Our platform is dedicated to bringing the passion of Gambian and international football straight to your screens.");
         }
       } catch (error) {
         console.error("Error fetching about data:", error);

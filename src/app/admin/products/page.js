@@ -122,7 +122,7 @@ export default function AdminProducts() {
           <h1 className="text-3xl font-extrabold text-white uppercase tracking-wider flex items-center gap-3">
              <ShoppingBag className="h-8 w-8 text-primary" /> Products
           </h1>
-          <p className="mt-2 text-sm text-gray-400">Manage Amptee sports products</p>
+          <p className="mt-2 text-sm text-gray-400">Manage Amputee sports products</p>
         </div>
         <button
           onClick={openAddModal}
@@ -212,7 +212,7 @@ export default function AdminProducts() {
                 <div className="p-6 space-y-6">
                   <div>
                     <label className="block text-sm font-bold uppercase tracking-wide text-gray-300 mb-2">Product Name</label>
-                    <input type="text" name="name" required value={formData.name} onChange={handleChange} className="block w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all shadow-inner" placeholder="e.g. Amptee Football Jersey" />
+                    <input type="text" name="name" required value={formData.name} onChange={handleChange} className="block w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all shadow-inner" placeholder="e.g. Amputee Football Jersey" />
                   </div>
                   
                   <div className="grid grid-cols-2 gap-6">

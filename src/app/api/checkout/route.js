@@ -29,7 +29,7 @@ export async function POST(req) {
         product_data: {
           name: item.name,
           images: item.imageUrl ? [item.imageUrl] : [],
-          description: item.description || "Amptee Football Gear",
+          description: item.description || "Amputee Football Gear",
         },
         unit_amount: Math.round(item.price * 100), // convert to cents
       },

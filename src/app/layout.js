@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-let rawBaseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://amptee-football-gambia.vercel.app";
+let rawBaseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://amputee-football-gambia.vercel.app";
 let siteUrl = rawBaseUrl.replace(/\/+$/, "");
 if (!siteUrl.startsWith("http://localhost") && !siteUrl.startsWith("http://127.0.0.1")) {
   siteUrl = siteUrl.replace(/^http:\/\//i, "https://");
@@ -96,6 +96,9 @@ export const metadata = {
     icon: "/logo1.png",
     shortcut: "/logo1.png",
     apple: "/logo1.png",
+  },
+  verification: {
+    google: "NC_FNTWm21-hLH5AvMXtB1auMTkbdPGHtv_McAtpA-I",
   },
 };
 
