@@ -13,8 +13,14 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const rawBaseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://amptee-football-gambia.vercel.app";
-const siteUrl = rawBaseUrl.replace(/\/+$/, "");
+let rawBaseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://amptee-football-gambia.vercel.app";
+let siteUrl = rawBaseUrl.replace(/\/+$/, "");
+if (!siteUrl.startsWith("http://localhost") && !siteUrl.startsWith("http://127.0.0.1")) {
+  siteUrl = siteUrl.replace(/^http:\/\//i, "https://");
+  if (!siteUrl.startsWith("https://")) {
+    siteUrl = `https://${siteUrl}`;
+  }
+}
 
 export const metadata = {
   metadataBase: new URL(siteUrl),

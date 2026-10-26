@@ -1,6 +1,12 @@
 export default function robots() {
-  const rawBaseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://amptee-football-gambia.vercel.app";
-  const baseUrl = rawBaseUrl.replace(/\/+$/, "");
+  let rawBaseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://amptee-football-gambia.vercel.app";
+  let baseUrl = rawBaseUrl.replace(/\/+$/, "");
+  if (!baseUrl.startsWith("http://localhost") && !baseUrl.startsWith("http://127.0.0.1")) {
+    baseUrl = baseUrl.replace(/^http:\/\//i, "https://");
+    if (!baseUrl.startsWith("https://")) {
+      baseUrl = `https://${baseUrl}`;
+    }
+  }
 
   return {
     rules: [
